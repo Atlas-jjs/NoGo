@@ -1,6 +1,6 @@
 # NoGo
 
-Simple Website Blocker is designed for users who want a fast and straightforward way to restrict access to specific websites. Just enter a URL, and the site is immediately blocked. No need to configure time limits or schedules—perfect for staying focused with minimal setup.
+NoGo is designed for users who want a fast and straightforward way to restrict access to specific websites. Just enter a URL, and the site is immediately blocked. No need to configure time limits or schedules—perfect for staying focused with minimal setup.
 
 ![Preview](res/samplePreview.jpg)
 
