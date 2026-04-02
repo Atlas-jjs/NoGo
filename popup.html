@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="res/favicon.ico" type="image/x-icon" />
+
+    <link rel="manifest" href="/manifest.json" />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/popup.css" />
+
+    <!-- Google Fonts Icon -->
+  </head>
+  <body>
+    <h4>Workspace</h6>
+    <h1>Protect your attention.</h1>
+
+    <section class="form-container">
+      <form id="websiteForm">
+        <div class="wrapper">
+          <label for="website">New Restricted URL</label>
+          <input
+            type="text"
+            id="website"
+            name="website"
+            placeholder="e.g. youtube.com"
+          />
+        </div>
+        <button type="submit">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="28px"
+            viewBox="0 -960 960 960"
+            width="48px"
+            fill="#FFFFFF"
+          >
+            <path
+              d="M480-81q-140-35-230-162.5T160-523v-238l320-120 320 120v238q0 152-90 279.5T480-81Z"
+            />
+          </svg>
+          Add to Blocklist
+        </button>
+      </form>
+    </section>
+
+    <section class="websites-container">
+      <div class="wrapper">
+        <h2>Currently Restricted</h2>
+        <p id="total-websites"></p>
+      </div>
+      <ol id="websites-list"></ol>
+    </section>
+
+    <p id="Result"></p>
+
+    <!-- JS Script -->
+    <script type="module" src="js/content.js"></script>
+  </body>
+</html>

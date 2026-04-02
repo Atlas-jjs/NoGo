@@ -1,0 +1,57 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Outfit:wght@100..900&display=swap");
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body,
+button {
+  font-family: "Outfit", sans-serif;
+}
+
+.container {
+  width: 100%;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  gap: 0.5rem;
+}
+
+.heading {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+}
+
+.description {
+  font-size: clamp(1rem, 5vw, 1.25rem);
+  text-align: center;
+}
+
+/* Go Back Button */
+.go-back-btn {
+  font-size: clamp(1rem, 5vw, 1.25rem);
+
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 4rem;
+  background-color: rgb(88, 82, 204);
+  color: white;
+  transition: all 300ms ease-in-out;
+  cursor: pointer;
+}
+.go-back-btn:hover {
+  background-color: rgb(108, 102, 224);
+}
+.go-back-btn:active {
+  background-color: rgb(68, 62, 153);
+}
