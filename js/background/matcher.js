@@ -1,3 +1,5 @@
+import { FALLBACK_LISTS } from "./config.js";
+
 export function domainMatchesList(hostname, list) {
   const h = hostname.toLowerCase().replace(/^www\./, "");
   return list.some((blocked) => {
@@ -20,8 +22,12 @@ export async function getEnabledCategories() {
 export async function checkUrlAgainstCategories(url) {
   try {
     const hostname = new URL(url).hostname;
-    const { categoryLists } = await chrome.storage.local.get(["categoryLists"]);
-    if (!categoryLists) return null;
+    let { categoryLists } = await chrome.storage.local.get(["categoryLists"]);
+    
+    // Fallback immediately if storage is empty
+    if (!categoryLists || Object.keys(categoryLists).length === 0) {
+      categoryLists = FALLBACK_LISTS;
+    }
 
     const enabledCategories = await getEnabledCategories();
 
@@ -32,6 +38,8 @@ export async function checkUrlAgainstCategories(url) {
         }
       }
     }
-  } catch (_) {}
+  } catch (err) {
+    console.error("[NoGo] Category match error:", err);
+  }
   return null;
 }
