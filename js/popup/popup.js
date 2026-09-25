@@ -1,8 +1,4 @@
-// Redirect user to block page
-// import {  } from "./toast.js";
-
-const redirectUrl = chrome.runtime.getURL("blocked.html");
-const list = document.querySelector("#Result");
+// Popup UI Logic
 
 function createCloseSVG(website) {
   const svgNS = "http://www.w3.org/2000/svg";
@@ -25,13 +21,7 @@ function createCloseSVG(website) {
   return svg;
 }
 
-// Fetches the blocked websites array from the chrome extension storage sync
-function getBlockedWebsites(callback) {
-  chrome.storage.sync.get(["blockedWebsites"], (result) => {
-    const blocked = result.blockedWebsites || [];
-    callback(blocked);
-  });
-}
+import { getBlockedWebsites, saveBlockedWebsites } from "../utils/storage.js";
 
 function removeWebsiteFromList(website) {
   getBlockedWebsites((websites) => {
@@ -45,7 +35,6 @@ function removeWebsiteFromList(website) {
 function renderListOfWebsites() {
   const listOfWebsites = document.getElementById("websites-list");
   const totalNumberOfWebsites = document.getElementById("total-websites");
-  const re = /^(https?:\/\/)(www\.)?/;
 
   listOfWebsites.innerHTML = "";
   totalNumberOfWebsites.textContent = "";
@@ -53,7 +42,7 @@ function renderListOfWebsites() {
   getBlockedWebsites((websites) => {
     if (!websites || websites.length === 0) {
       const li = document.createElement("li");
-      li.textContent = "There is no websites to block";
+      li.textContent = "There are no websites to block";
       listOfWebsites.appendChild(li);
     } else {
       websites.forEach((website) => {
@@ -64,12 +53,10 @@ function renderListOfWebsites() {
         listWrapper.setAttribute("class", "item__wrapper");
 
         const img = document.createElement("img");
-        const domain = website.replace(re, "");
         const temp = document.createElement("span");
 
-        // li.textContent = website.replace(re, "");
-        temp.textContent = domain;
-        img.src = `https://www.google.com/s2/favicons?domain=${domain}&sz=64`;
+        temp.textContent = website;
+        img.src = `https://www.google.com/s2/favicons?domain=${website}&sz=64`;
         img.setAttribute("class", "favicon-icon");
 
         listWrapper.appendChild(img);
@@ -84,17 +71,6 @@ function renderListOfWebsites() {
   });
 }
 
-// Check if the current URL is within the array of blocked websites. If yes then it will redirect to the blocked page.
-getBlockedWebsites((websites) => {
-  if (websites.includes(window.location.origin)) {
-    window.location.replace(redirectUrl);
-  }
-});
-
-function saveBlockedWebsites(array, callback) {
-  chrome.storage.sync.set({ blockedWebsites: array }, callback);
-}
-
 document.addEventListener("DOMContentLoaded", () => {
   renderListOfWebsites();
 
@@ -104,7 +80,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
   form.addEventListener("submit", (e) => {
     e.preventDefault();
-    const newSite = userInput.value.trim();
+    const rawInput = userInput.value.trim();
+
+    if (!rawInput) return;
+
+    // Normalize URL for robust matching
+    let newSite = rawInput.toLowerCase();
+    newSite = newSite.replace(/^(https?:\/\/)/, "");
+    newSite = newSite.replace(/^www\./, "");
+    newSite = newSite.replace(/\/.*$/, ""); // Strip paths if any
 
     if (!newSite) return;
 

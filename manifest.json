@@ -3,17 +3,12 @@
   "name": "NoGo",
   "version": "1.0.0",
   "description": "Block distracting, harmful, and inappropriate websites automatically. Includes built-in filters for adult content, gambling, and illegal sites.",
-  "permissions": ["storage", "alarms"],
+  "permissions": ["storage", "alarms", "webNavigation", "tabs"],
   "host_permissions": ["<all_urls>"],
   "background": {
-    "service_worker": "js/background.js"
+    "service_worker": "js/background/main.js",
+    "type": "module"
   },
-  "content_scripts": [
-    {
-      "matches": ["<all_urls>"],
-      "js": ["js/content.js"]
-    }
-  ],
   "web_accessible_resources": [
     {
       "resources": ["blocked.html", "css/blocked.css", "res/*"],
