@@ -1,5 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Outfit:wght@100..900&display=swap");
 
+:root {
+  --heading: #1e293b;
+  --subheading: #64748b;
+  --button: rgb(88, 82, 204);
+}
 * {
   padding: 0;
   margin: 0;
@@ -11,6 +16,11 @@ button {
   font-family: "Outfit", sans-serif;
 }
 
+body {
+  background: linear-gradient(135deg, #f0f4ff 0%, #faf5ff 100%);
+  min-height: 100dvh;
+}
+
 .container {
   width: 100%;
   height: 100dvh;
@@ -18,40 +28,59 @@ button {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 2rem;
+  gap: 1.5rem;
+  padding: 2rem;
+  text-align: center;
 }
 
 .wrapper {
   display: flex;
   flex-direction: column;
   text-align: center;
-  gap: 0.5rem;
+  gap: 0.6rem;
 }
 
 .heading {
-  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-size: clamp(2rem, 5vw, 3rem);
+  color: var(--heading);
+}
+
+.site-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #5852cc;
+  background: rgba(88, 82, 204, 0.08);
+  border-radius: 6px;
+  padding: 0.25rem 0.75rem;
+  display: inline-block;
+  align-self: center;
 }
 
 .description {
-  font-size: clamp(1rem, 5vw, 1.25rem);
+  font-size: clamp(1rem, 3vw, 1.1rem);
   text-align: center;
+  color: var(--subheading);
 }
 
 /* Go Back Button */
 .go-back-btn {
-  font-size: clamp(1rem, 5vw, 1.25rem);
+  font-size: clamp(1rem, 3vw, 1.1rem);
 
   padding: 1rem 2rem;
   border: none;
   border-radius: 4rem;
-  background-color: rgb(88, 82, 204);
+  background-color: var(--button);
   color: white;
   transition: all 300ms ease-in-out;
   cursor: pointer;
+  font-weight: 600;
 }
 .go-back-btn:hover {
   background-color: rgb(108, 102, 224);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(88, 82, 204, 0.35);
 }
 .go-back-btn:active {
   background-color: rgb(68, 62, 153);
+  transform: translateY(0);
 }

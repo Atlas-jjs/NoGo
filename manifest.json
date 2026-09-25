@@ -2,8 +2,12 @@
   "manifest_version": 3,
   "name": "NoGo",
   "version": "1.0.0",
-  "description": "A simple website blocker that lets you instantly restrict access to any site. No schedules, no timers. Just enter a URL and it’s blocked.",
-  "permissions": ["storage"],
+  "description": "Block distracting, harmful, and inappropriate websites automatically. Includes built-in filters for adult content, gambling, and illegal sites.",
+  "permissions": ["storage", "alarms"],
+  "host_permissions": ["<all_urls>"],
+  "background": {
+    "service_worker": "js/background.js"
+  },
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
@@ -12,7 +16,7 @@
   ],
   "web_accessible_resources": [
     {
-      "resources": ["blocked.html"],
+      "resources": ["blocked.html", "css/blocked.css", "res/*"],
       "matches": ["<all_urls>"]
     }
   ],
