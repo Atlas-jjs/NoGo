@@ -136,11 +136,15 @@ h2 {
   margin-bottom: 0.75rem;
 }
 
+/* Scrollable list */
 #websites-list {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
   list-style: none;
+  max-height: 220px;
+  overflow-y: auto;
+  padding-right: 4px;
 }
 
 .websites-list__item {
@@ -187,10 +191,62 @@ h2 {
   fill: #ef4444;
 }
 
-/* Results message */
-#Result {
-  margin-top: 1rem;
-  font-size: 0.8rem;
+/* Custom Scrollbar */
+#websites-list::-webkit-scrollbar {
+  width: 6px;
+}
+#websites-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+#websites-list::-webkit-scrollbar-thumb {
+  background-color: #cbd5e1;
+  border-radius: 10px;
+}
+
+/* Empty State */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
   text-align: center;
   color: var(--text-muted);
+}
+.empty-state svg {
+  width: 48px;
+  height: 48px;
+  fill: #cbd5e1;
+  margin-bottom: 1rem;
+}
+.empty-state p {
+  font-size: 0.9rem;
+}
+
+/* Toast Messages */
+.toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  padding: 10px 20px;
+  border-radius: 8px;
+  color: white;
+  font-weight: 500;
+  font-size: 0.9rem;
+  box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.toast.show {
+  transform: translateX(-50%) translateY(0);
+}
+.toast.success {
+  background-color: #10b981;
+}
+.toast.danger {
+  background-color: #ef4444;
 }

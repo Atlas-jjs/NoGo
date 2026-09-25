@@ -15,7 +15,15 @@ chrome.webNavigation.onBeforeNavigate.addListener(async (details) => {
     // 1. Check custom user blocklist
     const { blockedWebsites } = await chrome.storage.sync.get(["blockedWebsites"]);
     if (blockedWebsites) {
-      if (blockedWebsites.some(site => hostname === site || hostname.endsWith("." + site))) {
+      if (blockedWebsites.some(site => {
+        // Strip the last TLD (e.g., example.com -> example)
+        const lastDot = site.lastIndexOf(".");
+        const siteBase = lastDot !== -1 ? site.substring(0, lastDot) : site;
+        
+        // Match hostname exactly, or as a subdomain/TLD variant
+        const regex = new RegExp(`(^|\\.)${siteBase}\\.`);
+        return regex.test(hostname) || hostname === siteBase;
+      })) {
         const redirectUrl = chrome.runtime.getURL(`blocked.html?site=${hostname}&reason=manual`);
         chrome.tabs.update(details.tabId, { url: redirectUrl });
         return;

@@ -22,6 +22,7 @@ function createCloseSVG(website) {
 }
 
 import { getBlockedWebsites, saveBlockedWebsites } from "../utils/storage.js";
+import { toast } from "../utils/toast.js";
 
 function removeWebsiteFromList(website) {
   getBlockedWebsites((websites) => {
@@ -41,9 +42,14 @@ function renderListOfWebsites() {
 
   getBlockedWebsites((websites) => {
     if (!websites || websites.length === 0) {
-      const li = document.createElement("li");
-      li.textContent = "There are no websites to block";
-      listOfWebsites.appendChild(li);
+      listOfWebsites.innerHTML = `
+        <div class="empty-state">
+          <svg viewBox="0 -960 960 960">
+            <path d="M480-120q-150 0-255-105T120-480q0-150 105-255t255-105q150 0 255 105t105 255q0 150-105 255T480-120Zm0-80q116 0 198-82t82-198q0-116-82-198t-198-82q-116 0-198 82t-82 198q0 116 82 198t198 82Zm-40-360v-160h80v160h-80Zm0 240v-160h80v160h-80Zm40-120Z"/>
+          </svg>
+          <p>Your blocklist is empty. Add a website to stay focused!</p>
+        </div>
+      `;
     } else {
       websites.forEach((website) => {
         const li = document.createElement("li");
@@ -76,7 +82,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const form = document.getElementById("websiteForm");
   const userInput = document.querySelector("#website");
-  const resultDisplay = document.querySelector("#Result");
 
   form.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -97,11 +102,11 @@ document.addEventListener("DOMContentLoaded", () => {
         websites.push(newSite);
         saveBlockedWebsites(websites, () => {
           renderListOfWebsites();
-          resultDisplay.textContent = `Website added: ${newSite}`;
+          toast(`Website added: ${newSite}`, "success");
           userInput.value = "";
         });
       } else {
-        resultDisplay.textContent = `Website is already Blocked: ${newSite}`;
+        toast(`${newSite} is already blocked`, "danger");
       }
     });
   });
